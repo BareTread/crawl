@@ -19,6 +19,9 @@ RUN apt-get update && apt-get install -y \
     libasound2 \
     libpango-1.0-0 \
     libcairo2 \
+    libfontconfig \
+    libfreetype6 \
+    xvfb \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
@@ -29,7 +32,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install Playwright and browser
-RUN playwright install --with-deps chromium
+RUN playwright install chromium
+RUN playwright install-deps
 
 # Copy application files
 COPY . .
